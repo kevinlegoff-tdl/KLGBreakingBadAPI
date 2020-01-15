@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ResponseData<T: Decodable> {
+public struct ResponseData<T: Decodable> {
     let data: T?
     let error: Error?
 }

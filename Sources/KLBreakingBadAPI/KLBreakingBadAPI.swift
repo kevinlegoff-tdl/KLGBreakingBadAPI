@@ -1,7 +1,7 @@
 import Foundation
 
 
-protocol BreakingBadApiClient {
+public protocol BreakingBadApiClient {
     var baseURL: URL {get}
     var allCharactersEndoint: URL { get }
     var randomQuoteEndpoint: URL { get }
@@ -13,12 +13,12 @@ protocol BreakingBadApiClient {
     func randomQuote(using urlSession: URLSession, _ completion: @escaping QuoteCallback)
 }
 
-typealias QuoteCallback = (ResponseData<Quote>) -> Void
-typealias CharactersCallback = (ResponseData<[Character]>) -> Void
+public typealias QuoteCallback = (ResponseData<Quote>) -> Void
+public typealias CharactersCallback = (ResponseData<[Character]>) -> Void
 
 extension BreakingBadApiClient {
 
-    var allCharactersEndoint: URL {
+    public var allCharactersEndoint: URL {
         get{
             return baseURL.appendingPathComponent("characters")
         }
@@ -31,7 +31,7 @@ extension BreakingBadApiClient {
         }
     }
 
-    var randomQuoteEndpoint: URL {
+    public var randomQuoteEndpoint: URL {
         get{
             return quoteEndpoint
                 .appendingPathComponent("random")
@@ -100,7 +100,7 @@ extension BreakingBadApiClient {
 
 public class BreakingBadRestApiClient: BreakingBadApiClient {
 
-    var baseURL: URL
+    public var baseURL: URL
 
     public init(baseURL: URL = URL(string: "https://www.breakingbadapi.com/api")!) {
         self.baseURL = baseURL
