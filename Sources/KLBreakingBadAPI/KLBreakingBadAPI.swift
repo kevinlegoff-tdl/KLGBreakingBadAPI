@@ -102,7 +102,7 @@ public class BreakingBadRestApiClient: BreakingBadApiClient {
 
     var baseURL: URL
 
-    init(baseURL: URL = URL(string: "https://www.breakingbadapi.com/api")!) {
+    public init(baseURL: URL = URL(string: "https://www.breakingbadapi.com/api")!) {
         self.baseURL = baseURL
     }
 }
