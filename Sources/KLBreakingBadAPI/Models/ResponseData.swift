@@ -8,8 +8,8 @@
 import Foundation
 
 public struct ResponseData<T: Decodable> {
-    let data: T?
-    let error: Error?
+    public let data: T?
+    public let error: Error?
 }
 
 // Simple factory methods for the ResponseData method
