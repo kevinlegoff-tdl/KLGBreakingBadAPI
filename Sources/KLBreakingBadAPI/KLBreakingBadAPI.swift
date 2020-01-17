@@ -73,6 +73,7 @@ extension BreakingBadApiClient {
         let retriever = session.dataTask(with: endpoint) { data, response, error  in
             if let err = error {
                 completion(ResponseData.error(err))
+                return
             }
 
             guard let response = response as? HTTPURLResponse else{
