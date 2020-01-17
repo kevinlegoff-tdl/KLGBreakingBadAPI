@@ -1,12 +1,11 @@
-//
-//  File.swift
-//  
-//
-//  Created by Kevin Le Goff on 13/01/2020.
-//
-
+///
+/// Represent a Character with a name and an id
 public struct Character: Codable {
+
+    /// id the id of the character
     public let id: Int
+
+    /// name the name of the character
     public let name: String
 
     enum CodingKeys: String, CodingKey {

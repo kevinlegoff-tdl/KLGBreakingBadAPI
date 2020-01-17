@@ -13,11 +13,16 @@ public protocol BreakingBadApiClient {
     func randomQuote(using urlSession: URLSession, _ completion: @escaping QuoteCallback)
 }
 
+/// Simple type alias for function that is called when a  quote is loaded
 public typealias QuoteCallback = (ResponseData<Quote>) -> Void
+
+/// Simple type alias for function that is called when the list of characters is loaded
 public typealias CharactersCallback = (ResponseData<[Character]>) -> Void
 
 extension BreakingBadApiClient {
 
+
+    /// Endpoint used to retreive the list of `Character`
     public var allCharactersEndoint: URL {
         get{
             return baseURL.appendingPathComponent("characters")
@@ -31,6 +36,7 @@ extension BreakingBadApiClient {
         }
     }
 
+    /// Endpoint used to retreive a random `Quote`
     public var randomQuoteEndpoint: URL {
         get{
             return quoteEndpoint
@@ -38,21 +44,31 @@ extension BreakingBadApiClient {
         }
     }
 
+    /// Send a request to the server to getAlltheCaharcters from the break bad series
+    /// - Parameter  using: the url session that will be used to make the web service call
+    /// - Parameter  completion: the function invoked once the web sevice as returned data as an array of `Character` or an `Error` if one occured. The completion callback is not executed on the main thread
     public func allTVCharacters(using urlSession: URLSession = URLSession(configuration: .ephemeral), _ completion:  @escaping CharactersCallback) {
         loadData(using: urlSession, from: allCharactersEndoint, completion)
     }
 
+    /// Send a request to the server to getAlltheCaharcters from the break bad series
+    /// - Parameter  using: the url session that will be used to make the web service call
+    /// - Parameter  name: the character name author of the random quote
+    /// - Parameter  completion: the function invoked once the web sevice as returned data as a single `Quote` or an `Error` if one occured. The completion callback is not executed on the main thread
     public func randomQuote(using urlSession: URLSession = URLSession(configuration: .ephemeral), fromCharacterWithName name: String, _ completion: @escaping QuoteCallback) {
         let url = buildQuoteFromCharacterURL(name: name)
         loadRandomQuote(using: urlSession, from: url, completion: completion)
     }
 
+    /// Send a request to the server to getAlltheCaharcters from the break bad series
+    /// - Parameter  using: the url session that will be used to make the web service call
+    /// - Parameter  completion: the function invoked once the web sevice as returned data as a single `Quote` or an `Error` if one occured. The completion callback is not executed on the main thread
     public func randomQuote(using urlSession: URLSession = URLSession(configuration: .ephemeral), _ completion: @escaping QuoteCallback) {
         loadRandomQuote(using: urlSession, from: randomQuoteEndpoint, completion: completion)
     }
 
     func buildQuoteFromCharacterURL(name: String) -> URL{
-          return randomQuoteEndpoint.appendingQuery(key: "author", value: name)
+        return randomQuoteEndpoint.appendingQuery(key: "author", value: name)
     }
 
     private func loadRandomQuote(using urlSession:URLSession, from: URL, completion: @escaping QuoteCallback) {
@@ -99,10 +115,15 @@ extension BreakingBadApiClient {
     }
 }
 
+/// Default implementation for a Breaking bad API Client
 public class BreakingBadRestApiClient: BreakingBadApiClient {
 
+    /// Base url of the server this is used as the root to build endpoints URLs
     public var baseURL: URL
 
+    /// init the default client with the URL given as parameter
+    /// of fall back to https://www.breakingbadapi.com/api if no url is passed
+    /// - Parameter baseURL: the URL of the server that is used by the client
     public init(baseURL: URL = URL(string: "https://www.breakingbadapi.com/api")!) {
         self.baseURL = baseURL
     }
